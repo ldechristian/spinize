@@ -1,68 +1,85 @@
-// import { getCredentials, type Credentials } from '../lib/credentials';
-// import { getCoverArt } from '../lib/coverArtDB'; // LOCAL DB method
-// import { CLIENT, VERSION } from '../pages/Home';
+import { useEffect, useState } from "react";
+import { getCredentials, type Credentials } from "../lib/credentials";
+
+const DEFAULT_COVER = "/songCover.jpg";
+
+async function buildCoverUrl(id: string): Promise<string> {
+  const creds = (await getCredentials()) as Credentials;
+
+  return (
+    `${creds.url}/rest/getCoverArt?id=${id}` +
+    `&u=${creds.username}` +
+    `&t=${creds.token}` +
+    `&s=${creds.salt}` +
+    `&c=your-client-name` +
+    `&v=1.16.1`
+  );
+}
+
+// Test if an image actually loads
+function testImage(url: string): Promise<boolean> {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => resolve(true);
+    img.onerror = () => resolve(false);
+    img.src = url;
+  });
+}
 
 export function useCoverArt(
-  id: string | undefined,
-  // type: 'song' | 'album' | 'artist' | 'playlist' = 'song'
+  songId?: string,
+  albumId?: string
 ) {
-  // const DEFAULT_COVER = `/${type}Cover.jpg`;
-  // const [cover, setCover] = useState<string>(DEFAULT_COVER);
-  const DEFAULT_COVER = id ? undefined : undefined;
-  // const [cover, setCover] = useState<string | undefined>(DEFAULT_COVER);
-  // const [loading, setLoading] = useState(true);
-  // const [error, setError] = useState<string | null>(null);
+  const [cover, setCover] = useState<string>(DEFAULT_COVER);
+  const [loading, setLoading] = useState(true);
 
-  // useEffect(() => {
-  //   const fetchCover = async () => {
-  //     if (!id) return;
-  //     setLoading(true);
-  //     setError(null);
+  useEffect(() => {
+    let cancelled = false;
 
-  //     try {
-  //       // Step 1: Check if cover is downloaded
-  //       const localCover = await getCoverArt(id);
+    async function fetchCover() {
+      if (!songId && !albumId) {
+        setCover(DEFAULT_COVER);
+        setLoading(false);
+        return;
+      }
 
-  //       if (localCover) {
-  //         const localUrl = URL.createObjectURL(localCover);
-  //         setCover(localUrl);
-  //         return;
-  //       }
+      setLoading(true);
 
-  //       // Step 2: If not available locally, fetch from server
-  //       const creds = (await getCredentials()) as Credentials;
-  //       const url =
-  //         `${creds.url}/rest/getCoverArt?id=${id}` +
-  //         `&u=${creds.username}` +
-  //         `&t=${creds.token}` +
-  //         `&s=${creds.salt}` +
-  //         `&c=${CLIENT}` +
-  //         `&v=${VERSION}`;
-  //         // + `&_=${Date.now()}`;
+      try {
+        // 1. Try song cover
+        if (songId) {
+          const songUrl = await buildCoverUrl(songId);
+          if (await testImage(songUrl)) {
+            if (!cancelled) setCover(songUrl);
+            return;
+          }
+        }
 
-  //       // const img = new Image();
-  //       // img.onload = () => {
-  //       //   setCover(url);
-  //       //   setLoading(false);
-  //       // };
-  //       // img.onerror = () => {
-  //       //   setError('Cover failed to load');
-  //       //   setLoading(false);
-  //       // };
-  //       // img.src = url;
-  //       setCover(url);
-  //       return;
-  //     } catch {
-  //       setError('Error fetching cover art');
-  //       setLoading(false);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
+        // 2. Try album cover
+        if (albumId) {
+          const albumUrl = await buildCoverUrl(albumId);
+          if (await testImage(albumUrl)) {
+            if (!cancelled) setCover(albumUrl);
+            return;
+          }
+        }
 
-  //   fetchCover();
-  // }, [id]);
+        // 3. Fallback
+        if (!cancelled) setCover(DEFAULT_COVER);
 
-  // return { cover, loading, error };
-  return { cover: DEFAULT_COVER, loading: false, error: null };
+      } catch {
+        if (!cancelled) setCover(DEFAULT_COVER);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    }
+
+    fetchCover();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [songId, albumId]);
+
+  return { cover, loading };
 }
