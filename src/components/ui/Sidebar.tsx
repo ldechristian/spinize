@@ -1,4 +1,4 @@
-import { faCompass, faDownload, faHome, faList, faRadio, faRightToBracket, faStar } from "@fortawesome/free-solid-svg-icons";
+import { faBook, faCompass, faDownload, faHome, faList, faRadio, faRightToBracket, faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react"
 import { Link, useLocation } from "react-router-dom";
@@ -9,6 +9,8 @@ import { DummyList } from "../DataSection";
 import PlaylistItemSkeleton from "../lists/PlaylistItemSkeletton";
 
 export default function Sidebar() {
+    const APP_PREFIX = "/app";
+
     const [show, setShow] = useState<boolean>(true);
     const location = useLocation();
     const pathname = location.pathname;
@@ -30,30 +32,40 @@ export default function Sidebar() {
                         />
                     </li>
                     <Link
-                        to={'/app'}
+                        to={`${APP_PREFIX}`}
                         className={`${pathname === '/' ? 'bg-600' : 'hover:bg-black/50'}  transition-all duration-50 w-full p-2 rounded-md font-semibold flex flex-row gap-2 ${show ? 'justify-start' : 'justify-center'} items-center`}>
                         <FontAwesomeIcon icon={faHome} /> {show && 'Homepage'}
                     </Link>
                     <Link
-                        to={'/app/explore'}
+                        to={`${APP_PREFIX}/search`}
+                        className={`${pathname === '/search' ? 'bg-600' : 'hover:bg-black/50'} transition-all duration-50 w-full p-2 rounded-md font-semibold flex flex-row gap-2 ${show ? 'justify-start' : 'justify-center'} items-center`}>
+                        <FontAwesomeIcon icon={faCompass} /> {show && 'Search (ctrl + K)'}
+                    </Link>
+                    <Link
+                        to={`${APP_PREFIX}/library`}
+                        className={`${pathname === '/library' ? 'bg-600' : 'hover:bg-black/50'}  transition-all duration-50 w-full p-2 rounded-md font-semibold flex flex-row gap-2 ${show ? 'justify-start' : 'justify-center'} items-center`}>
+                        <FontAwesomeIcon icon={faBook} /> {show && 'Library'}
+                    </Link>
+                    {/* <Link
+                        to={`${APP_PREFIX}/explore`}
                         className={`${pathname === '/explore' ? 'bg-600' : 'hover:bg-black/50'} transition-all duration-50 w-full p-2 rounded-md font-semibold flex flex-row gap-2 ${show ? 'justify-start' : 'justify-center'} items-center`}>
                         <FontAwesomeIcon icon={faCompass} /> {show && 'Explore'}
-                    </Link>
-                    <Link
-                        to={'/app/starred'}
+                    </Link> */}
+                    {/* <Link
+                        to={`${APP_PREFIX}/starred`}
                         className={`${pathname === '/starred' ? 'bg-600' : 'hover:bg-black/50'}  transition-all duration-50 w-full p-2 rounded-md font-semibold flex flex-row gap-2 ${show ? 'justify-start' : 'justify-center'} items-center`}>
                         <FontAwesomeIcon icon={faStar} /> {show && 'Starred'}
-                    </Link>
-                    <Link
-                        to={'/app/downloads'}
+                    </Link> */}
+                    {/* <Link
+                        to={`${APP_PREFIX}/downloads`}
                         className={`${pathname === '/downloads' ? 'bg-600' : 'hover:bg-black/50'}  transition-all duration-50 w-full p-2 rounded-md font-semibold flex flex-row gap-2 ${show ? 'justify-start' : 'justify-center'} items-center`}>
                         <FontAwesomeIcon icon={faDownload} /> {show && 'Downloads'}
-                    </Link>
-                    <Link
-                        to={'/app/radio'}
+                    </Link> */}
+                    {/* <Link
+                        to={`${APP_PREFIX}/radio`}
                         className={`${pathname === '/radio' ? 'bg-600' : 'hover:bg-black/50'}  transition-all duration-50 w-full p-2 rounded-md font-semibold flex flex-row gap-2 ${show ? 'justify-start' : 'justify-center'} items-center`}>
                         <FontAwesomeIcon icon={faRadio} /> {show && 'Public Radio Stations'}
-                    </Link>
+                    </Link> */}
                 </ul>
 
                 {/* Middle */}

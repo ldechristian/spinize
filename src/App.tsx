@@ -10,7 +10,6 @@ import Songs from './pages/Songs';
 import Artists from './pages/Artists';
 import Albums from './pages/Albums';
 import Search from './pages/Search';
-import Explore from './pages/Explore';
 import AlbumDetail from './pages/AlbumDetail';
 import Playlists from './pages/Playlists';
 import PlaylistDetail from './pages/PlaylistDetail';
@@ -23,6 +22,7 @@ import Downloads from './pages/Downloads';
 import { DownloadProvider } from './hooks/DownloadProvider';
 import Radio from './pages/Radio';
 import AboutProject from './pages/project/AboutProject';
+import Library from './pages/Library';
 
 export default function App() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -40,20 +40,20 @@ export default function App() {
               <Route path="/app" element={<Layout audioRef={audioRef} />}>
                 {/* Homepage */}
                 <Route index element={<Home />} />
-                {/* Downloads */}
-                <Route path="downloads" element={<Downloads />} />
-                {/* Auth & Log out */}
-                <Route path="auth" element={<Auth />} />
-                <Route path="log-out" element={<LogOut />} />
-                {/* Explore */}
-                <Route path="explore" element={<Explore />} />
-                {/* Starred */}
-                <Route path="starred" element={<Starred />} />
                 {/* Search */}
                 <Route path="search">
                   <Route index element={<Search />} />
                   <Route path=":query" element={<Search />} />
                 </Route>
+                {/* Downloads */}
+                <Route path="downloads" element={<Downloads />} />
+                {/* Auth & Log out */}
+                <Route path="auth" element={<Auth />} />
+                <Route path="log-out" element={<LogOut />} />
+                {/* Starred */}
+                <Route path="starred" element={<Starred />} />
+                {/* Starred */}
+                <Route path="library" element={<Library />} />
                 {/* Songs */}
                 <Route path="songs">
                   <Route index element={<Songs />} />
@@ -76,8 +76,15 @@ export default function App() {
                 </Route>
                 {/* Blindtest */}
                 {/* <Route path="blintest" element={<Blindtest />} /> */}
+
+
+
+
                 {/* Radio */}
-                <Route path="radio" element={<Radio />} />
+                {/* <Route path="radio" element={<Radio />} /> */}
+
+
+
 
                 {/* Not Found */}
                 <Route path='*' element={<NotFound />} />
