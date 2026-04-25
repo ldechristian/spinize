@@ -69,7 +69,7 @@ export default function DataSection({ type, data, gallery = false, list = false,
         </h2>
       }
       {viewAll && !['recently played', 'your favorite artist'].includes(type) && (
-        <Link to={`/${type}`} className="text-500 font-semibold italic hover:underline">
+        <Link to={`/app/${type}`} className="text-500 font-semibold italic hover:underline">
           View all {type} {(type === 'songs' || type === 'albums' || type === 'artists') && <FontAwesomeIcon icon={type === 'songs' ? faMusic : type === 'albums' ? faCompactDisc : faMicrophone} />}
         </Link>
       )}
@@ -106,7 +106,7 @@ export default function DataSection({ type, data, gallery = false, list = false,
               )
             }
           </div>
-        )) : data?.length > 0 ? data?.map((media: Song | Album | Artist | Playlist) => (
+        )) : data?.length > 0 ? data?.map((media: Song | Album | Artist | Playlist, index: number) => (
           <div key={media.id} className={list ? 'border-b-1 border-white/50' : isBrickLayout ? '' : gallery ? "" : "flex-shrink-0 w-36 md:w-40 lg:w-54 xl:w-60"}>
             {
               type === 'albums' ? (
@@ -118,7 +118,7 @@ export default function DataSection({ type, data, gallery = false, list = false,
               // ) : type === 'your favorite artist' ? (
               //   <DataSection type="your favorite artist" data={[favoriteArtist]} starred={starred} />
               ) : list ? (
-                <SongListItem song={media as Song} />
+                <SongListItem song={media as Song} index={(media as Song).track || index} />
               ) : bricks ? (
                 <SongBrickItem song={media as Song} />
               ) : (type === 'recently played' || type === 'starred rewind' || type === 'underrated gems' || type === 'favorite highlight' || type === 'daily mix' || type === 'your favorite artist') ? (

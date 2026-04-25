@@ -1,7 +1,19 @@
+function getOrdinal(day: number): string {
+    if (day >= 11 && day <= 13) return `${day}th`;
+
+    switch (day % 10) {
+        case 1: return `${day}st`;
+        case 2: return `${day}nd`;
+        case 3: return `${day}rd`;
+        default: return `${day}th`;
+    }
+}
+
+
 export function formatDate(date: string, option: string = 'ymdhis'): string {
     // Option is a string containing combinations like:
     // 'y' = year
-    // 'm' = month
+    // 'm' = month | 'M' = month in letters
     // 'd' = day
     // 'h' = hour
     // 'i' = minute
@@ -26,8 +38,15 @@ export function formatDate(date: string, option: string = 'ymdhis'): string {
             case 'm':
                 formattedDate += `${month} `;
                 break;
+            case 'M':
+                formattedDate += `${dateObj.toLocaleString('en-US', { month: 'long' })} `;
+                break;
             case 'd':
-                formattedDate += `${day} `;
+                if (option.includes('M')) {
+                    formattedDate += `${getOrdinal(dateObj.getDate())} `;
+                } else {
+                    formattedDate += `${day} `;
+                }
                 break;
             case 'h':
                 formattedDate += `${hours}h `;

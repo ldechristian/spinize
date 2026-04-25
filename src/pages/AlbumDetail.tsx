@@ -68,7 +68,7 @@ export default function AlbumDetail() {
             </div>
 
             <section className="mt-6 text-gray-300">
-              <p className='text-white'><span className='text-gray-300'>Duration :</span> <FormatDuration duration={album.duration}/> <i>mm:ss</i></p>
+              <p className='text-white'><span className='text-gray-300'>Duration :</span> <FormatDuration duration={album.duration}/></p>
             </section>
           </div>
         </div>

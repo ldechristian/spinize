@@ -1,12 +1,7 @@
 import { faList, faMicrophone, faMusic, faRecordVinyl, faStar } from '@fortawesome/free-solid-svg-icons';
-import DataSection from '../components/DataSection';
-import { useStarred } from '../hooks/useStarred';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { makeLink } from '../components/ui/makeLink';
 
 export default function Library() {
-  const { starred } = useStarred();
-
   return (
     <>
       <section>

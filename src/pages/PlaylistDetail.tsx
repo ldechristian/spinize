@@ -55,12 +55,12 @@ export default function PlaylistDetail() {
 
             <div className='flex flex-row justify-between xl:justify-start items-start gap-1 xl:gap-4'>
               <p className='text-gray-300'>
-                {formatDate(playlist.created, 'ymd') || '--'}
+                {formatDate(playlist.created, 'dMy') || '--'}
               </p>
             </div>
 
             <section className="mt-6 text-gray-300">
-              <p className='text-white'><span className='text-gray-300'>Duration :</span> <FormatDuration duration={playlist.duration}/> <i>mm:ss</i></p>
+              <p className='text-white'><span className='text-gray-300'>Duration :</span> <FormatDuration duration={playlist.duration}/></p>
             </section>
           </div>
         </div>
