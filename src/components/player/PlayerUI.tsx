@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronUp, faChevronDown, faPlay, faPause, faForwardStep, faBackwardStep, faRotateLeft, faRotateRight, faShuffle, faRepeat, faList, fa1, fa0, fa2 } from '@fortawesome/free-solid-svg-icons';
+import { faChevronUp, faChevronDown, faPlay, faPause, faForwardStep, faBackwardStep, faRotateLeft, faRotateRight, faShuffle, faRepeat, faList, fa1, fa0, fa2, faQuoteLeft, faBan } from '@fortawesome/free-solid-svg-icons';
 import { useSongPlayer } from '../../context/useSongPlayer';
 import ButtonClassic from '../ButtonClassic';
 import FormatDuration from '../tools/FormatDuration';
@@ -364,13 +364,13 @@ export default function PlayerUI({ audioRef }: PlayerProps) {
                                     <>
                                         <button
                                             onClick={toggleViewQueue}
-                                            className={`absolute left-2 bottom-2 rounded-md backdrop-blur-sm p-1 border-2 border-white/50 ${viewQueue && 'bg-white text-black'} transition-all duration-100`}>
-                                            Queue
+                                            className={`absolute left-2 bottom-2 rounded-md backdrop-blur-sm p-1 w-8 h-8 aspect-square ${viewQueue && 'bg-white text-black'} transition-all duration-100`}>
+                                            <FontAwesomeIcon icon={faList} />
                                         </button>
                                         <button
                                             onClick={toggleViewLyrics}
-                                            className={`absolute right-2 bottom-2 rounded-md backdrop-blur-sm p-1 border-2 border-white/50 ${viewLyrics && 'bg-white text-black'} transition-all duration-100`}>
-                                            Lyrics
+                                            className={`absolute right-2 bottom-2 rounded-md backdrop-blur-sm p-1 w-8 h-8 aspect-square ${viewLyrics && 'bg-white text-black'} transition-all duration-100`}>
+                                            <FontAwesomeIcon icon={faQuoteLeft} />
                                         </button>
                                     </>
                                 )
@@ -395,12 +395,34 @@ export default function PlayerUI({ audioRef }: PlayerProps) {
                         {
                             !live && (
                                 <>
-                                    <ButtonClassic size='large' className='relative aspect-square text-white/70' onClick={() => setRepeat(repeat + 1 > 2 ? 0 : repeat + 1)} >
-                                        <FontAwesomeIcon icon={repeat == 0 ? faRepeat : faRepeat} />
-                                        <FontAwesomeIcon icon={repeat == 0 ? fa0 : repeat == 1 ? fa1 : fa2} className='absolute bottom-0 right-0 text-sm' />
+                                {
+                                    repeat == 0 && (
+                                    <ButtonClassic size='large' className='relative aspect-square text-white scale-[0.6]' onClick={() => setRepeat(1)}>
+                                        <FontAwesomeIcon icon={faRepeat} className='absolute inset-0 w-full h-full scale-[0.5]' />
+                                        <FontAwesomeIcon icon={faBan} className='absolute inset-0 w-full h-full' />
                                     </ButtonClassic>
-                                    <ButtonClassic size='large' className='aspect-square text-white/70' onClick={handlePrev} >
-                                        <FontAwesomeIcon icon={faBackwardStep} />
+                                    )
+                                }
+
+                                {
+                                    repeat == 1 && (
+                                    <ButtonClassic size='large' className='relative aspect-square text-white scale-[0.6]' onClick={() => setRepeat(2)}>
+                                        <FontAwesomeIcon icon={faRepeat} className='absolute inset-0 w-full h-full scale-[0.5]' />
+                                    </ButtonClassic>
+                                    )
+                                }
+
+                                {
+                                    repeat == 2 && (
+                                    <ButtonClassic size='large' className='relative aspect-square text-white scale-[0.6]' onClick={() => setRepeat(0)} >
+                                        <FontAwesomeIcon icon={faRepeat} className='absolute inset-0 w-full h-full scale-[0.5]' />
+                                        <FontAwesomeIcon icon={fa1} className='absolute bottom-0 right-0 scale-[0.5]' />
+                                    </ButtonClassic>
+                                    )
+                                }
+
+                                    <ButtonClassic size='large' className='relative aspect-square text-white/70 scale-[0.6]' onClick={handlePrev} >
+                                        <FontAwesomeIcon icon={faBackwardStep} className='absolute inset-0 w-full h-full' />
                                     </ButtonClassic>
                                 </>
                             )
@@ -411,11 +433,11 @@ export default function PlayerUI({ audioRef }: PlayerProps) {
                         {
                             !live && (
                                 <>
-                                    <ButtonClassic size='large' className='aspect-square text-white/70' onClick={handleNext} >
-                                        <FontAwesomeIcon icon={faForwardStep} />
+                                    <ButtonClassic size='large' className='relative aspect-square text-white/70 scale-[0.6]' onClick={handleNext} >
+                                        <FontAwesomeIcon icon={faForwardStep} className='absolute inset-0 w-full h-full' />
                                     </ButtonClassic>
-                                    <ButtonClassic size='large' className='aspect-square text-white/70' onClick={() => setShuffle(!shuffle)} >
-                                        <FontAwesomeIcon icon={shuffle ? faShuffle : faList} />
+                                    <ButtonClassic size='large' className='relative aspect-square text-white/70 scale-[0.6]' onClick={() => setShuffle(!shuffle)} >
+                                        <FontAwesomeIcon icon={shuffle ? faShuffle : faList} className='absolute inset-0 w-full h-full' />
                                     </ButtonClassic>
                                 </>
                             )
