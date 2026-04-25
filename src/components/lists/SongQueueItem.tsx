@@ -16,6 +16,8 @@ interface SongQueueItemProps {
 }
 
 export default function SongQueueItem({ song, minimal }: SongQueueItemProps) {
+  const APP_PREFIX = "/app";
+
   const { currentSong, handleSongClick } = useSongPlayer();
   const { cover, loading } = useCoverArt(song.id);
 
@@ -73,20 +75,20 @@ export default function SongQueueItem({ song, minimal }: SongQueueItemProps) {
         {/* Song text details */}
         <div className="py-1 w-50 sm:w-96 md:w-96 lg:w-150 h-full flex flex-col gap-0 justify-start items-start">
           <Link
-            to={`/songs/${song.id}`}
+            to={`${APP_PREFIX}/songs/${song.id}`}
             className="hover:underline text-sm font-semibold truncate w-fit max-w-[65vw]">
             {song.title}
           </Link>
 
           <Link
-            to={`/artists/${song.artistId}`}
+            to={`${APP_PREFIX}/artists/${song.artistId}`}
             className="hover:underline text-xs text-gray-300 truncate w-fit max-w-[65vw]">
               {song.artist}
           </Link>
 
           {!minimal && (
             <Link
-              to={`/albums/${song.albumId}`}
+              to={`${APP_PREFIX}/albums/${song.albumId}`}
               className="hover:underline text-xs text-gray-300 truncate w-fit max-w-[65vw]">
                 {`${song.album} (${song.year})`}
             </Link>

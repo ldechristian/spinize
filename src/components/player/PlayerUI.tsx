@@ -141,6 +141,7 @@ export default function PlayerUI({ audioRef }: PlayerProps) {
         } else {
             playPrevSong();
         }
+        if (paused) pause();
     };
 
     const handleNext = () => {
@@ -154,6 +155,7 @@ export default function PlayerUI({ audioRef }: PlayerProps) {
             pause();
             playNextSong();
         }
+        if (paused) pause();
     };
 
     const handleBackward = () => {
@@ -542,8 +544,8 @@ export default function PlayerUI({ audioRef }: PlayerProps) {
                             <button onClick={toggleViewLyrics} className="sticky top-0 xl:backdrop-blur-sm w-full p-2 flex flex-row justify-center items-center">
                                 {currentSong && viewLyrics ? 'Close Lyrics' : 'View Lyrics'}
                             </button>
-                            {currentSong && (
-                                <Lyrics audioRef={audioRef} song={currentSong} currentTime={currentTime} setSongTime={setSongTime} />
+                            {currentSong &&  (
+                                <Lyrics audioRef={audioRef} song={currentSong} currentTime={currentTime} setSongTime={setSongTime} viewLyrics={viewLyrics} />
                             )}
                         </div>
                     </div>

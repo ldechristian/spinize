@@ -13,11 +13,13 @@ export default function Lyrics({
     currentTime,
     setSongTime,
     audioRef,
+    viewLyrics,
 }: {
     song: Song;
     currentTime: number;
     setSongTime: (new_time: number) => void;
     audioRef: React.RefObject<HTMLAudioElement | null>;
+    viewLyrics: boolean;
 }) {
     const [lyrics, setLyrics] = useState<ParsedLine[]>([]);
     const activeLineRef = useRef<HTMLButtonElement | null>(null);
@@ -85,7 +87,11 @@ export default function Lyrics({
         }
     }, [activeIndex]);
 
-    if (lyrics.length === 0) return <></>;
+    if (!viewLyrics) return null;
+
+    if (lyrics.length === 0) return <>
+        <i>There are no Lyrics.</i>
+    </>;
 
     return (
         <div className="w-full h-[80svh] my-auto overflow-y-scroll hide-scrollbar">
