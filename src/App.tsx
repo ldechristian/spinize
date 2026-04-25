@@ -23,6 +23,7 @@ import { DownloadProvider } from './hooks/DownloadProvider';
 import Radio from './pages/Radio';
 import AboutProject from './pages/project/AboutProject';
 import Library from './pages/Library';
+import Homepage from './pages/Homepage';
 
 export default function App() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -34,8 +35,10 @@ export default function App() {
           <DownloadProvider>
             <AudioPlayer audioRef={audioRef} />
             <Routes>
+              <Route path='/' element={<Homepage />} />
+
               {/* About the Project page */}
-              <Route path='/' element={<AboutProject />} />
+              <Route path='/about' element={<AboutProject />} />
 
               <Route path="/app" element={<Layout audioRef={audioRef} />}>
                 {/* Homepage */}
