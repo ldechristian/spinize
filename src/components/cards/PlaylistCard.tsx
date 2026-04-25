@@ -13,7 +13,7 @@ interface PlaylistCardProps {
 export default function PlaylistCard({ playlist }: PlaylistCardProps) {
   const { currentSong } = useSongPlayer();
   const { cover, loading } = useCoverArt(playlist.id);
-  const playlistUrl = `/playlists/${playlist.id}`;
+  const playlistUrl = `/app/playlists/${playlist.id}`;
 
   return (
     <div className={`snap-start relative w-full h-fit aspect-square rounded-lg overflow-hidden shadow-lg border-4 border-color-500 group`}>

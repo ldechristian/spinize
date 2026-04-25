@@ -8,6 +8,7 @@ export function useSong(id: string | undefined) {
     const [item, setItem] = useState<Song | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    setError(null);
 
   useEffect(() => {
     if (!id) return;

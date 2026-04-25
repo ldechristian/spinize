@@ -42,7 +42,7 @@ export default function SongListItem({ song, minimal, index, isInQueue = false }
             <div className="relative w-fit grid rounded-lg place-items-center text-white font-semibold text-3xl">
               {!loading ? (
                 <AutoImage
-                  src={cover}
+                  src={cover ?? '/songCover.jpg'}
                   alt={`${song.album} cover art`}
                   className="relative max-w-18 h-full object-cover aspect-square rounded-lg bg-black"
                   width={72}
@@ -64,7 +64,7 @@ export default function SongListItem({ song, minimal, index, isInQueue = false }
               aria-label={`Play ${song.title}`}
             >
               <AutoImage
-                src={cover}
+                src={cover ?? '/albumConver.jpg'}
                 alt={`${song.album} cover art`}
                 className="relative max-w-18 h-full object-cover aspect-square rounded-lg bg-black"
                 width={72}

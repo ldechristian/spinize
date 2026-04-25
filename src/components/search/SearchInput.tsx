@@ -7,6 +7,8 @@ export default function SearchInput({ defaultValue = '' }: { defaultValue?: stri
   const { query } = useParams();
   const inputRef: RefObject<HTMLInputElement | null> = useRef(null);
 
+  const APP_PREFIX = "/app";
+
   // Focus input on Ctrl+K
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -27,13 +29,13 @@ export default function SearchInput({ defaultValue = '' }: { defaultValue?: stri
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      navigate(`/search/${encodeURIComponent(searchQuery.trim())}`);
+      navigate(`${APP_PREFIX}/search/${encodeURIComponent(searchQuery.trim())}`);
     }
   };
 
   const handleClear = () => {
     setSearchQuery('');
-    navigate('/search');
+    navigate(`${APP_PREFIX}/search`);
   };
 
   return (
@@ -51,12 +53,12 @@ export default function SearchInput({ defaultValue = '' }: { defaultValue?: stri
         placeholder="Search a ... song, artist, album"
         value={searchQuery}
         onFocus={() => {
-          navigate(`/search/${encodeURIComponent(searchQuery.trim())}`);
+          navigate(`${APP_PREFIX}/search/${encodeURIComponent(searchQuery.trim())}`);
         }}
         onChange={(e) => {
           e.preventDefault();
           setSearchQuery(e.target.value);
-          navigate(`/search/${encodeURIComponent(e.target.value.trim())}`);
+          navigate(`${APP_PREFIX}/search/${encodeURIComponent(e.target.value.trim())}`);
         }}
         className="w-full h-full p-2 outline-none bg-600 rounded-md text-white placeholder-white"
       />

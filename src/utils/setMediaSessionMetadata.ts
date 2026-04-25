@@ -1,6 +1,6 @@
 import type { Song } from "../types/Song";
 
-export function setMediaSessionMetadata(song: Song, cover: string) {
+export function setMediaSessionMetadata(song: Song, cover: string = 'songCover.jpg') {
   if ('mediaSession' in navigator && song) {
     // navigator.mediaSession.metadata = new window.MediaMetadata({
     navigator.mediaSession.metadata = new MediaMetadata({

@@ -13,7 +13,7 @@ interface ArtistCardProps {
 export default function ArtistCard({ isStarred, artist }: ArtistCardProps) {
   const { currentSong } = useSongPlayer();
   const { cover, loading } = useCoverArt(artist.id);
-  const artistUrl = `/artists/${artist.id}`;
+  const artistUrl = `/app/artists/${artist.id}`;
 
   return (
     <div className={`snap-start relative w-full h-full rounded-full overflow-hidden shadow-lg border-1 ${isStarred ? 'border-color-golden' : 'border-color-500'} group`}>

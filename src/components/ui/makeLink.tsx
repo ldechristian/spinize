@@ -9,7 +9,7 @@ export function makeLink(
   onSmallSize: boolean = true
 ) {
   // Adjust the href to include '/app' if necessary
-  const adjustedHref = `/app${href}`;
+  const adjustedHref = `/app/${href}`;
 
   return (
     <Link

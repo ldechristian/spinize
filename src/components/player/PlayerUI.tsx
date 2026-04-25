@@ -10,6 +10,7 @@ import Lyrics from './Lyrics';
 import Queue from './Queue';
 import StarToggle from './StarToggle';
 import AutoImage from '../AutoImage';
+import { get_linear_volume, get_normal_volume, updateVolume } from '../../compUtils/updateVolume';
 
 interface PlayerProps {
     audioRef: React.RefObject<HTMLAudioElement | null>;
@@ -21,11 +22,13 @@ export default function PlayerUI({ audioRef }: PlayerProps) {
         playNextSong, playPrevSong, setRepeat, setShuffle
     } = useSongPlayer();
 
-    const [currentVolume, setCurrentVolume] = useState<number>(50.0); // Load the last volume from the localStorage or indexedDB (preferably localStorage)
+    const [currentVolume, setCurrentVolume] = useState<number>(get_linear_volume() * 100.0); // Load the last volume from the localStorage or indexedDB (preferably localStorage)
 
     useEffect(() => {
         const audio = audioRef?.current;
         if (!audio) return;
+
+        audio.volume = get_normal_volume();
 
         const updateTime = () => setCurrentTime(audio.currentTime);
         const updatePlayState = () => setPaused(audio.paused);
@@ -253,7 +256,7 @@ export default function PlayerUI({ audioRef }: PlayerProps) {
                         </ButtonClassic>
                         <div className='w-fit h-full hidden md:block max-h-[3.5rem] aspect-square'>
                             <AutoImage
-                            src={cover}
+                            src={cover ?? '/songConver.jpg'}
                             alt='Song Cover Image'
                             width={48}
                             height={48}
@@ -339,7 +342,7 @@ export default function PlayerUI({ audioRef }: PlayerProps) {
                 <div className="flex flex-col w-full 2xl:max-w-[32vw] h-[80svh] my-auto overflow-hidden">
                     <div className="flex-1 flex flex-col items-center justify-center gap-2 w-full px-4 md:px-6 lg:px-8">
                         <AutoImage
-                            src={cover}
+                            src={cover ?? '/songConver.jpg'}
                             alt='Song Cover Image'
                             width={32}
                             height={32}
@@ -349,7 +352,7 @@ export default function PlayerUI({ audioRef }: PlayerProps) {
                         {/* <div className='aspect-square w-full h-fit max-w-[42svh] max-h-[42svh] sm:max-w-[55svh] sm:max-h-[55svh] md:max-w-[60svh] md:max-h-[60svh]'> */}
                         <div className='relative aspect-square w-fit h-fit overflow-hidden max-h-[60svh]'>
                             <AutoImage
-                            src={cover}
+                            src={cover ?? '/songConver.jpg'}
                             alt='Song Cover Image'
                             width={576}
                             height={576}
@@ -472,14 +475,12 @@ export default function PlayerUI({ audioRef }: PlayerProps) {
                                 className="w-full range-slider-transparent"
                                 onChange={(e) => {
                                     const newVolume = parseFloat(e.target.value);
-                                    // if (howlRef.current) {
-                                    //     howlRef.current.seek(newTime);
-                                    //     setCurrentTime(newTime);
-                                    // }
+                                    setCurrentVolume(newVolume);
+                                    updateVolume(newVolume / 100.0); //
+
                                     const audio = audioRef?.current;
                                     if (audio) {
-                                        audio.volume = newVolume / 100;
-                                        setCurrentVolume(newVolume);
+                                        audio.volume = get_normal_volume(); //
                                     }
                                 }}
                                 style={{
