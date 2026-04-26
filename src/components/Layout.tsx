@@ -22,6 +22,25 @@ export default function Layout({ audioRef }: Props) {
         return () => clearTimeout(timeout);
     }, [authenticated]);
 
+    return <div>
+        <main className="z-[9999] fixed w-screen h-screen overflow-hidden
+        flex flex-row gap-0
+        text-white">
+            <Sidebar />
+            <div className="relative w-full h-screen overflow-x-hidden overflow-y-scroll">
+                {/* <MobileNavigation /> */}
+                <Outlet />
+                <Footer />
+                <div className="sticky bottom-0 left-0 right-0">
+                    <PlayerUI audioRef={audioRef} />
+                </div>
+            </div>
+            {/* <AddToHomeScreenBanner /> */}
+        </main>
+
+        {/* Audio Player in the background, controlled by functions / methods. */}
+    </div>
+
     return <div className="app-layout bg-black text-white w-screen max-w-screen h-[100svh] overflow-hidden flex flex-row justify-between items-start">
         {showSplash && <SplashScreen />}
         {/* {

@@ -10,7 +10,7 @@ export default function Footer() {
             <nav className="w-full">
                 <ul className="flex flex-col gap-1 justify-start items-start">
                     <li>
-                        <p>2025 The Spinize Project - Developped with ⭐ <span className="text-golden font-semibold italic">passion</span> ⭐ by Christian LDE</p>
+                        <p>2025-26 The Spinize Project - Developped with ⭐ <span className="text-golden font-semibold italic">passion</span> ⭐ by Christian LDE</p>
                     </li>
                     <li>
                         <i>What is this platform? : A navidrome and subsonic client to make the overall user experience better.</i>

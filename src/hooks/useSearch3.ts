@@ -11,9 +11,9 @@ export function useSearch3(query: string = '') {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const [songs, setSongs] = useState<Song[] | null>(null);
-  const [albums, setAlbums] = useState<Album[] | null>(null);
   const [artists, setArtists] = useState<Artist[] | null>(null);
+  const [albums, setAlbums] = useState<Album[] | null>(null);
+  const [songs, setSongs] = useState<Song[] | null>(null);
 
   const fetchData = useCallback(async () => {
     setLoading(true);

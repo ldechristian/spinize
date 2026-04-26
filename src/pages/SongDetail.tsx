@@ -11,11 +11,17 @@ import PlayButton from '../components/song/PlayButton';
 export default function SongDetail() {
   const { id } = useParams();
 
-  const { song } = useSong(id);
+  const song = useSong(id);
   // const { cover } = useCoverArt(song?.id, 'song');
   const { cover } = useCoverArt(song?.id);
 
+  // console.log(song)
+
   if (song === null) return <>
+    No song found
+  </>
+
+  if (song === undefined) return <>
     Loading...
   </>
 

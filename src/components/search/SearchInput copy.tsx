@@ -39,9 +39,7 @@ export default function SearchInput({ defaultValue = '' }: { defaultValue?: stri
   };
 
   return (
-    <form onSubmit={handleSubmit} className="w-full h-[2.5rem] flex flex-row justify-between items-center
-    bg-black/40 rounded-lg backdrop-blur
-    border-2 border-color-500 text-white">
+    <form onSubmit={handleSubmit} className="mx-auto w-full xl:w-[50rem] h-[2.5rem] flex flex-row justify-between items-center border-2 border-color-500 rounded-md">
       <label
         htmlFor="search"
         className='aspect-square h-full grid w-fit place-items-center'>
@@ -52,7 +50,7 @@ export default function SearchInput({ defaultValue = '' }: { defaultValue?: stri
         type="text"
         name="search"
         id="search"
-        placeholder="Search a ... song, artist, album (ctrl + k)"
+        placeholder="Search a ... song, artist, album"
         value={searchQuery}
         onFocus={() => {
           navigate(`${APP_PREFIX}/search/${encodeURIComponent(searchQuery.trim())}`);
@@ -64,12 +62,14 @@ export default function SearchInput({ defaultValue = '' }: { defaultValue?: stri
         }}
         className="w-full h-full p-2 outline-none bg-600 rounded-md text-white placeholder-white"
       />
-      {/* <button
+      <span className="h-full px-2 grid place-items-center text-nowrap text-golden">Ctrl K</span>
+      <span className="w-1 h-full bg-600"></span>
+      <button
         type="button" // Important: this should NOT be "submit"
         onClick={handleClear}
         className='aspect-square h-full grid w-fit place-items-center'>
         <FontAwesomeIcon icon={faBroom} />
-      </button> */}
+      </button>
     </form>
   );
 }

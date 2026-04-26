@@ -20,9 +20,9 @@ export default function PlaylistButton({ referenceId = '', playlist, shuffle = f
       if (playlist) handlePlaylistClick(playlist, shuffle);
     }} disabled={referenceId == currentSong?.albumId || referenceId == currentSong?.artistId}>
       {overwriteLabel ? overwriteLabel : shuffle ? (
-        <>Shuffle <FontAwesomeIcon icon={faShuffle} /></>
+        <FontAwesomeIcon icon={faShuffle} size="2xl" />
        ) : (
-        <>Play all <FontAwesomeIcon icon={faPlay} /></>
+        <FontAwesomeIcon icon={faPlay} size="2xl" />
       )}
       {children}
     </button>

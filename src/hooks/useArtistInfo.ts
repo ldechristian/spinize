@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { getCredentials, type Credentials } from '../lib/credentials';
 import { CLIENT, VERSION } from '../pages/Home';
-import type { Song } from '../types/Song';
 import axios from 'axios';
+import type { ArtistInfo } from '../types/ArtistInfo';
 
-export function useSong(id: string | undefined) {
-  const [item, setItem] = useState<Song | null>(null);
+export function useArtistInfo(id: string | undefined): undefined | ArtistInfo | null {
+  const [item, setItem] = useState<undefined | ArtistInfo | null>(undefined);
 
   useEffect(() => {
     if (!id) return;
@@ -15,7 +15,7 @@ export function useSong(id: string | undefined) {
         const creds = (await getCredentials() as unknown) as Credentials;
 
         // Perform search3 request using axios
-        const res = await axios.get(`${creds.url}/rest/getSong`, {
+        const res = await axios.get(`${creds.url}/rest/getArtistInfo`, {
           params: {
             u: creds.username,
             t: creds.token,
@@ -27,7 +27,7 @@ export function useSong(id: string | undefined) {
           },
         });
 
-        setItem(res.data['subsonic-response'].song);
+        setItem(res.data['subsonic-response'].artistInfo);
       } catch {
         // setError(err?.message || 'Error fetching cover art');
       } finally {
@@ -38,8 +38,8 @@ export function useSong(id: string | undefined) {
     fetchCover();
   }, [id]);
 
+  // return { artist: item, loading, error };
   return item;
-  // return { song: item, loading, error };
 }
 
 
